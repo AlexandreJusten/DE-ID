@@ -2,7 +2,11 @@
   <div class="file-picker q-pa-md">
     <div class="q-gutter-md row items-start">
       <q-file
-        style="width: 400px; height: 100px"
+        style="
+          width: 400px;
+          height: 100px;
+          background-color: rgba(195, 195, 195, 0.682);
+        "
         v-model="files"
         label="Drop Them Here"
         filled
@@ -17,10 +21,16 @@
           <q-icon name="attach_file" class="file-icon" />
         </template>
       </q-file>
+      <q-tooltip
+        v-if="!userLoggedIn"
+        anchor="top middle"
+        style="font-size: 15px"
+      >
+        You need to login to enable uploading
+      </q-tooltip>
     </div>
   </div>
 </template>
-
 <style scoped>
 .custom-file-input {
   background-color: rgba(192, 192, 192, 0.3); /* Cor cinza transparente */
