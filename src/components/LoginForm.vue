@@ -1,26 +1,16 @@
 <template>
   <div class="q-pa-md" style="max-width: 400px; margin-top: 10%">
-    <q-item-label header style="text-align: center"> Login </q-item-label>
+    <q-item-label header style="text-align: center">Login</q-item-label>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
-        v-model="name"
+        v-model="username"
         label="UserName"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
 
-      <q-input
-        filled
-        type="password"
-        v-model="age"
-        label="Password"
-        lazy-rules
-        :rules="[
-          (val) => (val !== null && val !== '') || 'Please type your password',
-          (val) => (val > 0 && val < 100) || 'Please type a real password',
-        ]"
-      />
+      <q-input filled type="password" v-model="password" label="Password" />
 
       <q-toggle v-model="accept" label="I accept the license and terms" />
 
@@ -41,43 +31,56 @@
 <script>
 import { useQuasar } from "quasar";
 import { ref } from "vue";
+import axios from "axios";
 
 export default {
   setup() {
     const $q = useQuasar();
 
-    const name = ref(null);
-    const age = ref(null);
+    const username = ref(null);
+    const password = ref(null);
     const accept = ref(false);
 
-    return {
-      name,
-      age,
-      accept,
+    const onSubmit = async (event) => {
+      event.preventDefault(); // Prevent the default form submission behavior
 
-      onSubmit() {
-        if (accept.value !== true) {
-          $q.notify({
-            color: "red-5",
-            textColor: "white",
-            icon: "warning",
-            message: "You need to accept the license and terms first",
-          });
-        } else {
-          $q.notify({
-            color: "green-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Submitted",
-          });
+      if (accept.value !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "You need to accept the license and terms first",
+        });
+      } else {
+        try {
+          const response = await axios.post(
+            "http://secstor.canoinhas.ifsc.edu.br:40123/login",
+            {
+              username: username.value,
+              password: password.value,
+            }
+          );
+          // Assuming the response contains a "token" property
+          const token = response.data.token;
+          console.log("Received token:", token);
+        } catch (error) {
+          console.error("Error:", error);
         }
-      },
+      }
+    };
 
-      onReset() {
-        name.value = null;
-        age.value = null;
-        accept.value = false;
-      },
+    const onReset = () => {
+      username.value = null;
+      password.value = null;
+      accept.value = false;
+    };
+
+    return {
+      username,
+      password,
+      accept,
+      onSubmit,
+      onReset,
     };
   },
 };
