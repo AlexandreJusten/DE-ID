@@ -30,9 +30,28 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <LoginForm />
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2)"
+    >
+      <q-list style="padding: 15%; margin-top: -5%">
+        <div style="margin-top: 20%">
+          <q-btn color="primary" style="width: 200px">
+            <div class="ellipsis">OP1</div>
+          </q-btn>
+        </div>
+        <div style="margin-top: 10%">
+          <q-btn color="primary" style="width: 200px">
+            <div class="ellipsis">OP2</div>
+          </q-btn>
+        </div>
+        <div style="margin-top: 10%">
+          <q-btn color="primary" style="width: 200px">
+            <div class="ellipsis">OP3</div>
+          </q-btn>
+        </div>
       </q-list>
     </q-drawer>
 
@@ -44,14 +63,11 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import LoginForm from "src/components/LoginForm.vue";
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {
-    LoginForm,
-  },
+  components: {},
 
   setup() {
     const leftDrawerOpen = ref(false);

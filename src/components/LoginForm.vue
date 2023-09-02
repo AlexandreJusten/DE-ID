@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md" style="max-width: 400px; margin-top: 10%">
-    <q-item-label header style="text-align: center">Login</q-item-label>
+    <!-- <q-item-label header style="text-align: center">Login</q-item-label> -->
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
@@ -32,6 +32,8 @@
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import axios from "axios";
+import { useAuthStore } from "stores/user";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -40,9 +42,11 @@ export default {
     const username = ref(null);
     const password = ref(null);
     const accept = ref(false);
+    const authStore = useAuthStore();
+    const router = useRouter();
 
     const onSubmit = async (event) => {
-      event.preventDefault(); // Prevent the default form submission behavior
+      event.preventDefault();
 
       if (accept.value !== true) {
         $q.notify({
@@ -60,9 +64,10 @@ export default {
               password: password.value,
             }
           );
-          // Assuming the response contains a "token" property
           const token = response.data.token;
           console.log("Received token:", token);
+          authStore.setToken(token);
+          router.push({ path: "/" });
         } catch (error) {
           console.error("Error:", error);
         }

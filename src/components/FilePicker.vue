@@ -61,11 +61,13 @@
 <script>
 import { ref, watch } from "vue";
 import { Dialog } from "quasar";
+import { useAuthStore } from "stores/user";
 
 export default {
   setup() {
     const files = ref(null);
-    const userLoggedIn = ref(false);
+    const authStore = useAuthStore();
+    const userLoggedIn = ref(authStore.isAuthenticated);
 
     function counterLabelFn({ totalSize, filesNumber, maxFiles }) {
       return `${filesNumber} files of ${maxFiles} | ${totalSize}`;
@@ -79,6 +81,9 @@ export default {
       });
     }
 
+    watch(authStore.isAuthenticated, (newValue) => {
+      userLoggedIn.value = newValue;
+    });
     watch(userLoggedIn, (newValue) => {
       if (!newValue && files.value) {
         files.value = null;
