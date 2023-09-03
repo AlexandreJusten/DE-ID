@@ -58,6 +58,20 @@
         <q-item
           clickable
           rel="noopener"
+          to="/payload"
+          exact
+          style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); margin-top: 2vh"
+        >
+          <q-item-section avatar>
+            <q-icon name="code" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Payload</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          rel="noopener"
           to="/historic"
           style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); margin-top: 2vh"
         >
