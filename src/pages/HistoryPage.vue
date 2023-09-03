@@ -30,13 +30,13 @@ export default {
       items: {
         results: [],
       },
-      sessionToken: "3493543d769aa2bdbaefa52e7469e3fd397f4572", // Defina seu token aqui
+      sessionToken: "3493543d769aa2bdbaefa52e7469e3fd397f4572",
     };
   },
 
   async mounted() {
     const url = "http://secstor.canoinhas.ifsc.edu.br:40123";
-    const task_id = "results"; // Substitua com o ID da tarefa desejada
+    const task_id = "results";
 
     try {
       const response = await fetch(`${url}/${task_id}`, {
@@ -61,8 +61,6 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos do componente aqui */
-
 .login-page {
   display: flex;
   justify-content: left;
@@ -74,6 +72,4 @@ h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
-
-/* Estilos para o componente LoginForm.vue podem ser adicionados aqui, se necessário */
 </style>

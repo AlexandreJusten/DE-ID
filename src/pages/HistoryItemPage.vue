@@ -20,13 +20,13 @@ export default {
       items: {
         results: [],
       },
-      sessionToken: "3493543d769aa2bdbaefa52e7469e3fd397f4572", // Defina seu token aqui
-      jsonResult: null, // Variável para armazenar o JSON como texto
+      sessionToken: "3493543d769aa2bdbaefa52e7469e3fd397f4572",
+      jsonResult: null,
     };
   },
   async mounted() {
     const url = "http://secstor.canoinhas.ifsc.edu.br:40123";
-    const task_id = "result_detail"; // Substitua com o ID da tarefa desejada
+    const task_id = "result_detail";
     const item_id = this.id;
 
     try {
@@ -42,7 +42,6 @@ export default {
         const data = await response.json();
         this.items.results = data.results;
 
-        // Converte o objeto JSON em texto e armazena na variável jsonResult
         this.jsonResult = JSON.stringify(data, null, 2);
       } else {
         console.error("Erro ao buscar os dados:", response.statusText);
@@ -55,8 +54,6 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos do componente aqui */
-
 .login-page {
   display: flex;
   justify-content: left;
@@ -68,15 +65,13 @@ export default {
 }
 
 .json-text {
-  max-width: 80%; /* Defina a largura máxima desejada */
-  overflow-x: auto; /* Adicione uma barra de rolagem horizontal se necessário */
-  white-space: pre-wrap; /* Permite a quebra de linha dentro do <pre> */
+  max-width: 80%;
+  overflow-x: auto;
+  white-space: pre-wrap;
 }
 
 h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
-
-/* Estilos para o componente LoginForm.vue podem ser adicionados aqui, se necessário */
 </style>
