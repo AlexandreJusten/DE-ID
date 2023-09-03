@@ -8,6 +8,11 @@ const routes = [
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
       { path: "/historic", component: () => import("pages/HistoryPage.vue") },
+      {
+        path: "/historic/:id",
+        component: () => import("pages/HistoryItemPage.vue"),
+        props: true,
+      },
     ],
     beforeEnter: (to, from, next) => {
       const authStore = useAuthStore();
@@ -32,6 +37,11 @@ const routes = [
   {
     path: "/login",
     children: [{ path: "", component: () => import("pages/LoginPage.vue") }],
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      authStore.removeToken();
+      next();
+    },
   },
 ];
 
