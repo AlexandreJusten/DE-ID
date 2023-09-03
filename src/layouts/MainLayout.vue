@@ -34,24 +34,40 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2)"
+      style="
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        background-color: #f6f5f5;
+      "
     >
-      <q-list style="padding: 15%; margin-top: -5%">
-        <div style="margin-top: 20%">
-          <q-btn color="primary" style="width: 200px">
-            <div class="ellipsis">OP1</div>
-          </q-btn>
-        </div>
-        <div style="margin-top: 10%">
-          <q-btn color="primary" style="width: 200px">
-            <div class="ellipsis">OP2</div>
-          </q-btn>
-        </div>
-        <div style="margin-top: 10%">
-          <q-btn color="primary" style="width: 200px">
-            <div class="ellipsis">OP3</div>
-          </q-btn>
-        </div>
+      <q-list style="padding: 0%; margin-top: 0%">
+        <q-item-label header>Essential Links</q-item-label>
+        <q-item
+          clickable
+          rel="noopener"
+          to="/"
+          exact
+          style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1)"
+        >
+          <q-item-section avatar>
+            <q-icon name="school" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Anonymize</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          rel="noopener"
+          to="/historic"
+          style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); margin-top: 2vh"
+        >
+          <q-item-section avatar>
+            <q-icon name="school" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Historic</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="file-picker q-pa-md">
-    <div class="q-gutter-md row items-start">
+  <div class="column" style="height: 150px">
+    <div class="col">
       <q-file
         style="
           width: 400px;
@@ -16,6 +16,8 @@
         multiple
         class="custom-file-input"
         :disable="!userLoggedIn"
+        accept=".json, .csv"
+        @rejected="onRejected"
       >
         <template v-slot:prepend>
           <q-icon name="attach_file" class="file-icon" />
@@ -28,6 +30,9 @@
       >
         You need to login to enable uploading
       </q-tooltip>
+    </div>
+    <div class="col" style="margin-top: 15vh; text-align: center">
+      <q-btn push color="primary" label="Upload" />
     </div>
   </div>
 </template>
