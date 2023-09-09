@@ -1,12 +1,52 @@
 <template>
-  <div class="login-page">
-    <div class="q-pa-md box">
-      <pre class="json-text">{{ jsonResult }}</pre>
+  <div class="q-pa-sm" style="margin-top: 2vh">
+    <div class="row justify-between">
+      <div class="col-4"></div>
+      <div class="col-2">
+        <q-btn-dropdown
+          split
+          class="glossy"
+          color="primary"
+          label="Download"
+          @click="onMainClick"
+        >
+          <q-list>
+            <q-item clickable v-close-popup @click="downloadJson">
+              <q-item-section avatar>
+                <q-avatar
+                  icon="description"
+                  color="primary"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Json</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="downloadCsv">
+              <q-item-section avatar>
+                <q-avatar
+                  icon="assignment"
+                  color="secondary"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>CSV</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+      </div>
     </div>
   </div>
+  <MountTable :json-data="jsonResult" />
+  <pre class="json-text">{{ jsonResult }}</pre>
 </template>
 
 <script>
+import MountTable from "src/components/MountTable.vue";
 import { useAuthStore } from "src/stores/user";
 import { useRouter } from "vue-router";
 
@@ -14,6 +54,13 @@ const authStore = useAuthStore();
 export default {
   props: {
     id: String,
+  },
+  setup() {
+    return {
+      onMainClick() {
+        // console.log('Clicked on main button')
+      },
+    };
   },
   data() {
     return {
@@ -50,6 +97,50 @@ export default {
       console.error("Erro ao buscar os dados:", error);
     }
   },
+  methods: {
+    async downloadJson() {
+      // Verifique se há dados JSON disponíveis
+      if (!this.jsonResult) {
+        console.error("Nenhum dado JSON disponível para download.");
+        return;
+      }
+      // Crie um blob JSON
+      const jsonBlob = new Blob([this.jsonResult], {
+        type: "application/json",
+      });
+      // Crie um URL temporário para o blob
+      const jsonUrl = URL.createObjectURL(jsonBlob);
+      // Crie um elemento de link para iniciar o download
+      const link = document.createElement("a");
+      link.href = jsonUrl;
+      link.download = "data.json";
+      // Simule um clique no link para iniciar o download
+      link.click();
+      // Libere o URL do objeto temporário
+      URL.revokeObjectURL(jsonUrl);
+    },
+    async downloadCsv() {
+      // Verifique se há dados CSV disponíveis (você deve implementar a conversão para CSV)
+      if (!this.items.results) {
+        console.error("Nenhum dado CSV disponível para download.");
+        return;
+      }
+      // Implemente a lógica de conversão para CSV aqui
+      // Crie um blob CSV (substitua 'csvData' pela string CSV gerada)
+      const csvBlob = new Blob([csvData], { type: "text/csv" });
+      // Crie um URL temporário para o blob
+      const csvUrl = URL.createObjectURL(csvBlob);
+      // Crie um elemento de link para iniciar o download
+      const link = document.createElement("a");
+      link.href = csvUrl;
+      link.download = "data.csv";
+      // Simule um clique no link para iniciar o download
+      link.click();
+      // Libere o URL do objeto temporário
+      URL.revokeObjectURL(csvUrl);
+    },
+  },
+  components: { MountTable },
 };
 </script>
 

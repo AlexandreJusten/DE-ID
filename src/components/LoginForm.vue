@@ -18,10 +18,10 @@
         <q-btn label="Login" type="submit" color="primary" />
         <q-btn
           label="Register"
-          type="reset"
           color="primary"
           flat
           class="q-ml-sm"
+          @click="onRegister"
         />
       </div>
     </q-form>
@@ -74,6 +74,34 @@ export default {
       }
     };
 
+    const onRegister = async (event) => {
+      event.preventDefault();
+
+      if (accept.value !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "You need to accept the license and terms first",
+        });
+      } else {
+        try {
+          const response = await axios.post(
+            "http://secstor.canoinhas.ifsc.edu.br:40123/register",
+            {
+              username: username.value,
+              password: password.value,
+            }
+          );
+          const token = response.data.token;
+          console.log("Received token:", token);
+          authStore.setToken(token);
+          router.push({ path: "/" });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    };
     const onReset = () => {
       username.value = null;
       password.value = null;
@@ -85,6 +113,7 @@ export default {
       password,
       accept,
       onSubmit,
+      onRegister,
       onReset,
     };
   },
