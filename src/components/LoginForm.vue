@@ -57,13 +57,10 @@ export default {
         });
       } else {
         try {
-          const response = await axios.post(
-            "http://secstor.canoinhas.ifsc.edu.br:40123/login",
-            {
-              username: username.value,
-              password: password.value,
-            }
-          );
+          const response = await axios.post("https://api.de-id.com.br/login", {
+            username: username.value,
+            password: password.value,
+          });
           const token = response.data.token;
           console.log("Received token:", token);
           authStore.setToken(token);
@@ -87,7 +84,7 @@ export default {
       } else {
         try {
           const response = await axios.post(
-            "http://secstor.canoinhas.ifsc.edu.br:40123/register",
+            "https://api.de-id.com.br/register",
             {
               username: username.value,
               password: password.value,

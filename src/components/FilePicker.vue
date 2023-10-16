@@ -1,7 +1,11 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
     <q-file
-      style="width: 80%; min-width: 800px; background-color: rgba(195, 195, 195, 0.682)"
+      style="
+        width: 80%;
+        min-width: 800px;
+        background-color: rgba(195, 195, 195, 0.682);
+      "
       v-model="files"
       label="Drop a File Here to Start"
       filled
@@ -22,29 +26,42 @@
     </q-tooltip>
     <div v-if="columns && columns.length > 0">
       <q-card>
-      <q-card-section>
-      <h4>Parameterization:</h4>
-      <ul class="column-list">
-        <li v-for="(column, index) in columns" :key="index" class="column-item">
-          {{ column }}
-          <q-checkbox v-model="sensitiveColumns[column]" label="Sensitive" />
-          <q-checkbox v-model="diversityColumns[column]" label="Diversity" />
-          <q-checkbox v-model="closenessColumns[column]" label="Closeness" />
-          <q-select
-            v-model="selectedColumns[column]"
-            :options="firstSelectorOptions"
-            label="Select Technique"
-            @update:model-value="clearSecondSelector(column)"
-          />
-          <q-select
-            v-if="selectedColumns[column] !== null"
-            v-model="selectedSecondSelectors[column]"
-            :options="secondSelectorOptions[selectedColumns[column]]"
-            label="Select Method"
-          />
-        </li>
-      </ul>
-      </q-card-section>
+        <q-card-section>
+          <h4>Parameterization:</h4>
+          <ul class="column-list">
+            <li
+              v-for="(column, index) in columns"
+              :key="index"
+              class="column-item"
+            >
+              {{ column }}
+              <q-checkbox
+                v-model="sensitiveColumns[column]"
+                label="Sensitive"
+              />
+              <q-checkbox
+                v-model="diversityColumns[column]"
+                label="Diversity"
+              />
+              <q-checkbox
+                v-model="closenessColumns[column]"
+                label="Closeness"
+              />
+              <q-select
+                v-model="selectedColumns[column]"
+                :options="firstSelectorOptions"
+                label="Select Technique"
+                @update:model-value="clearSecondSelector(column)"
+              />
+              <q-select
+                v-if="selectedColumns[column] !== null"
+                v-model="selectedSecondSelectors[column]"
+                :options="secondSelectorOptions[selectedColumns[column]]"
+                label="Select Method"
+              />
+            </li>
+          </ul>
+        </q-card-section>
       </q-card>
     </div>
     <div>

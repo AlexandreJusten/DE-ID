@@ -35,7 +35,7 @@ export default {
   },
 
   async mounted() {
-    const url = "http://secstor.canoinhas.ifsc.edu.br:40123";
+    const url = "https://api.de-id.com.br";
     const task_id = "results";
 
     try {
