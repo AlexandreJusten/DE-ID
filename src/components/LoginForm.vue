@@ -34,6 +34,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useAuthStore } from "stores/user";
 import { useRouter } from "vue-router";
+import routers from "../../config/routers.json";
 
 export default {
   setup() {
@@ -57,13 +58,10 @@ export default {
         });
       } else {
         try {
-          const response = await axios.post(
-            "http://secstor.canoinhas.ifsc.edu.br:40123/login",
-            {
-              username: username.value,
-              password: password.value,
-            }
-          );
+          const response = await axios.post(routers.LOGIN, {
+            username: username.value,
+            password: password.value,
+          });
           const token = response.data.token;
           console.log("Received token:", token);
           authStore.setToken(token);
@@ -86,13 +84,10 @@ export default {
         });
       } else {
         try {
-          const response = await axios.post(
-            "http://secstor.canoinhas.ifsc.edu.br:40123/register",
-            {
-              username: username.value,
-              password: password.value,
-            }
-          );
+          const response = await axios.post(routers.REGISTER, {
+            username: username.value,
+            password: password.value,
+          });
           const token = response.data.token;
           console.log("Received token:", token);
           authStore.setToken(token);
@@ -115,6 +110,7 @@ export default {
       onSubmit,
       onRegister,
       onReset,
+      routers,
     };
   },
 };

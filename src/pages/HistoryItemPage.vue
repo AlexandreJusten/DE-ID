@@ -42,13 +42,14 @@
     </div>
   </div>
   <MountTable :json-data="jsonResult" />
-  <pre class="json-text">{{ jsonResult }}</pre>
+  <!-- <pre class="json-text">{{ jsonResult }}</pre> -->
 </template>
 
 <script>
 import MountTable from "src/components/MountTable.vue";
 import { useAuthStore } from "src/stores/user";
 import { useRouter } from "vue-router";
+import routers from "../../config/routers.json";
 
 const authStore = useAuthStore();
 export default {
@@ -77,7 +78,7 @@ export default {
     const item_id = this.id;
 
     try {
-      const response = await fetch(`${url}/${task_id}/${item_id}`, {
+      const response = await fetch(routers.RESULTS_DETAILS + `${item_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

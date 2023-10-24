@@ -1,0 +1,8 @@
+{
+  "LOGIN": "https://api.de-id.com.br/login",
+  "REGISTER": "https://api.de-id.com.br/register",
+  "SYNC": "https://api.de-id.com.br/anonymize/sync",
+  "ASYNC": "https://api.de-id.com.br/anonymize/async",
+  "RESULTS": "https://api.de-id.com.br/results",
+  "RESULTS_DETAILS": "https://api.de-id.com.br/result_detail/"
+}

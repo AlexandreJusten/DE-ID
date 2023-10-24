@@ -10,35 +10,38 @@
       row-key="id"
     />
   </div>
+  <pre>{{ this.formattedData }}</pre>
 </template>
 
 <script>
 export default {
   props: {
-    jsonData: {
-      type: String, // O tipo da prop pode ser ajustado conforme necessário
-      required: true, // Se você deseja que a prop seja obrigatória
-    },
+    jsonData: {},
   },
   data() {
     return {
       dynamicColumns: [],
       dynamicRows: [],
+      formattedData: [],
     };
   },
-  computed: {
-    results() {
-      // Parse os resultados do JSON
-      console.log(jsonData);
-      try {
-        return JSON.parse(this.jsonData.results);
-      } catch (error) {
-        return [];
-      }
-    },
+  created() {
+    this.parseJsonData();
   },
   methods: {
-    // Restante do seu código
+    parseJsonData() {
+      const checkData = () => {
+        if (this.jsonData) {
+          const parsedData = JSON.parse(this.jsonData);
+          const results = parsedData.results;
+          this.formattedData = results;
+        } else {
+          setTimeout(checkData, 1000);
+        }
+      };
+
+      checkData();
+    },
   },
 };
 </script>

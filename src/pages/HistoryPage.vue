@@ -22,11 +22,13 @@
 
 <script>
 import { useAuthStore } from "src/stores/user";
+import routers from "../../config/routers.json";
 
 const authStore = useAuthStore();
 export default {
   data() {
     return {
+      routers,
       items: {
         results: [],
       },
@@ -39,7 +41,7 @@ export default {
     const task_id = "results";
 
     try {
-      const response = await fetch(`${url}/${task_id}`, {
+      const response = await fetch(routers.RESULTS, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
