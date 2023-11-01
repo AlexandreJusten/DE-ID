@@ -7,11 +7,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
-      { path: "/historic", component: () => import("pages/HistoryPage.vue") },
+      { path: "/history", component: () => import("pages/HistoryPage.vue") },
       { path: "/payload", component: () => import("pages/PayloadPage.vue") },
 
       {
-        path: "/historic/:id",
+        path: "/history/:id",
         component: () => import("pages/HistoryItemPage.vue"),
         props: true,
       },

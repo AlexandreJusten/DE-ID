@@ -1,9 +1,9 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div class="q-pa-md q-gutter-sm" style="width: 90%;">
     <q-file
-      style="width: 80%; min-width: 800px; background-color: rgba(195, 195, 195, 0.682)"
+      style="width: 100%;  background-color: rgba(195, 195, 195, 0.682)"
       v-model="files"
-      label="Drop a File Here to Start"
+      label="Drop or Select a File..."
       filled
       max-files="1"
       multiple

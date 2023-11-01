@@ -1,19 +1,11 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <div
-      class="editor-container"
-      style="
-        height: 200px;
-        box-shadow: 4px 2px 2px 2px rgba(0, 0, 0, 0.2);
-        overflow-y: auto;
-      "
-    >
-      <q-editor
-        v-model="editor"
-        placeholder="Ex.: { 'execution_parameters': [ { 'algorithm', 'configuration', 'columns' } ], 'data' : [ { Object_1 }... ] }"
-        :definitions="{
-          bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' },
-        }"
+
+    <div class="q-pa-md" >
+      <q-input
+        v-model="text"
+        filled
+        type="textarea"
       />
     </div>
   </div>

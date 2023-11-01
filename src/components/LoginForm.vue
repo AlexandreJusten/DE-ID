@@ -1,18 +1,27 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px; margin-top: 10%">
+  <div
+    class="q-pa-md"
+    style="min-width: 300px; max-width: 400px; margin-top: 10%"
+  >
     <!-- <q-item-label header style="text-align: center">Login</q-item-label> -->
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
         v-model="username"
-        label="UserName"
+        label="Username"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
 
-      <q-input filled type="password" v-model="password" label="Password" />
+      <q-input
+        filled
+        type="password"
+        v-model="password"
+        label="Password"
+        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+      />
 
-      <q-toggle v-model="accept" label="I accept the license and terms" />
+      <br />
 
       <div>
         <q-btn label="Login" type="submit" color="primary" />
@@ -42,71 +51,58 @@ export default {
 
     const username = ref(null);
     const password = ref(null);
-    const accept = ref(false);
     const authStore = useAuthStore();
     const router = useRouter();
 
     const onSubmit = async (event) => {
       event.preventDefault();
 
-      if (accept.value !== true) {
-        $q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "You need to accept the license and terms first",
+      try {
+        const response = await axios.post(routers.LOGIN, {
+          username: username.value,
+          password: password.value,
         });
-      } else {
-        try {
-          const response = await axios.post(routers.LOGIN, {
-            username: username.value,
-            password: password.value,
-          });
-          const token = response.data.token;
-          console.log("Received token:", token);
-          authStore.setToken(token);
-          router.push({ path: "/" });
-        } catch (error) {
-          console.error("Error:", error);
-        }
+        const token = response.data.token;
+        console.log("Received token:", token);
+        authStore.setToken(token);
+        router.push({ path: "/" });
+      } catch (error) {
+        $q.notify({
+          message: "Login Failed",
+          caption: "Invalid username or password",
+          color: "red",
+        });
       }
     };
 
     const onRegister = async (event) => {
       event.preventDefault();
 
-      if (accept.value !== true) {
-        $q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "You need to accept the license and terms first",
+      try {
+        const response = await axios.post(routers.REGISTER, {
+          username: username.value,
+          password: password.value,
         });
-      } else {
-        try {
-          const response = await axios.post(routers.REGISTER, {
-            username: username.value,
-            password: password.value,
-          });
-          const token = response.data.token;
-          console.log("Received token:", token);
-          authStore.setToken(token);
-          router.push({ path: "/" });
-        } catch (error) {
-          console.error("Error:", error);
-        }
+        const token = response.data.token;
+        console.log("Received token:", token);
+        authStore.setToken(token);
+        router.push({ path: "/" });
+      } catch (error) {
+        $q.notify({
+          message: "Register Failed",
+          caption: "User already registered",
+          color: "red",
+        });
       }
     };
     const onReset = () => {
       username.value = null;
       password.value = null;
-      accept.value = false;
     };
 
     return {
       username,
       password,
-      accept,
       onSubmit,
       onRegister,
       onReset,
