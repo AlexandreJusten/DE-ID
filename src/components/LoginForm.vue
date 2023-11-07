@@ -1,14 +1,11 @@
 <template>
-  <div
-    class="q-pa-md"
-    style="min-width: 300px; max-width: 400px; margin-top: 10%"
-  >
-    <!-- <q-item-label header style="text-align: center">Login</q-item-label> -->
+  <div class="q-pa-md" style="min-width: 300px; max-width: 400px; margin-top: 10%;">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
         v-model="username"
         label="Username"
+        autocomplete="username"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
@@ -18,6 +15,7 @@
         type="password"
         v-model="password"
         label="Password"
+        autocomplete="current-password"
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
 
@@ -48,7 +46,6 @@ import routers from "../../config/routers.json";
 export default {
   setup() {
     const $q = useQuasar();
-
     const username = ref(null);
     const password = ref(null);
     const authStore = useAuthStore();
@@ -63,15 +60,10 @@ export default {
           password: password.value,
         });
         const token = response.data.token;
-        console.log("Received token:", token);
         authStore.setToken(token);
         router.push({ path: "/" });
       } catch (error) {
-        $q.notify({
-          message: "Login Failed",
-          caption: "Invalid username or password",
-          color: "red",
-        });
+        showErrorNotification("Login Failed", "Invalid username or password");
       }
     };
 
@@ -84,20 +76,25 @@ export default {
           password: password.value,
         });
         const token = response.data.token;
-        console.log("Received token:", token);
         authStore.setToken(token);
         router.push({ path: "/" });
       } catch (error) {
-        $q.notify({
-          message: "Register Failed",
-          caption: "User already registered",
-          color: "red",
-        });
+        showErrorNotification("Register Failed", "User already registered");
       }
     };
+
     const onReset = () => {
       username.value = null;
       password.value = null;
+    };
+
+    const showErrorNotification = (message, caption) => {
+      $q.notify({
+        message: message,
+        caption: caption,
+        icon: 'error',
+        color: "red",
+      });
     };
 
     return {

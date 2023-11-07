@@ -2,7 +2,7 @@
   <div class="login-page">
     <div class="login-container">
       <q-avatar square>
-        <img src="../../public/icons/icon.png" />
+        <img src="/icons/icon.png" />
       </q-avatar>
       <LoginForm />
     </div>
@@ -19,8 +19,6 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos do componente aqui */
-
 .login-page {
   display: flex;
   justify-content: center;
@@ -41,6 +39,4 @@ h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
-
-/* Estilos para o componente LoginForm.vue podem ser adicionados aqui, se necessário */
 </style>

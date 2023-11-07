@@ -1,69 +1,80 @@
 <template>
-  <div class="login-page">
-    <div class="q-pa-md" style="width: 90%;">
-      <q-list bordered separator style="min-width: 350px; width: 100%">
-        <q-item
-          v-for="item in items"
-          :key="item.task_id"
-          clickable
-          v-ripple
-          :to="'/history/' + item.task_id"
-        >
-          <q-item-section>
-            <q-item-label>
-              {{ item.description }}
-              <q-badge rounded :color="getStatusColor(item.status)">
-                {{ formatStatus(item.status) }}
-              </q-badge>
-            </q-item-label>
-            <q-item-label caption>{{ item.task_id }}</q-item-label>
-            <q-item-label caption>{{ item.created_at }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
+  <q-card class="q-ma-md q-pa-md">
+    <div class="text-h6 q-pb-md q-pl-sm">History</div>
+    <div v-if="!isLoading">
+      <div class="q-pa-md" style="width: 100%;">
+        <q-list bordered separator style="min-width: 350px; width: 100%;">
+          <q-item
+            v-for="item in items"
+            :key="item.task_id"
+            clickable
+            v-ripple
+            :to="'/history/' + item.task_id"
+          >
+            <q-item-section>
+              <q-item-label>
+                {{ item.description }}
+                <q-badge rounded :color="getStatusColor(item.status)">
+                  {{ formatStatus(item.status) }}
+                </q-badge>
+              </q-item-label>
+              <q-item-label caption>{{ item.task_id }}</q-item-label>
+              <q-item-label caption>{{ item.created_at }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
     </div>
-  </div>
+    <div class="q-pa-md flex flex-center loading-center" v-if="isLoading">
+      <q-circular-progress indeterminate rounded size="50px" color="light-blue" class="q-ma-md" />
+    </div>
+  </q-card>
 </template>
 
 <script>
 import { useAuthStore } from "src/stores/user";
 import routers from "../../config/routers.json";
 
-const authStore = useAuthStore();
-
-const STATUS_COLORS = {
-  COMPLETED: 'green',
-  COMPLETED_WITH_ERRORS: 'orange',
-  ERROR: 'red',
-  PENDING: 'primary',
-};
-
-const STATUS_LABELS = {
-  COMPLETED: 'Completed',
-  COMPLETED_WITH_ERRORS: 'Completed With Errors',
-  ERROR: 'Error',
-  PENDING: 'Pending',
-};
-
 export default {
   data() {
     return {
+      isLoading: true,
       routers,
       items: [],
       sessionToken: "3493543d769aa2bdbaefa52e7469e3fd397f4572",
     };
   },
 
+  computed: {
+    STATUS_COLORS() {
+      return {
+        COMPLETED: 'green',
+        COMPLETED_WITH_ERRORS: 'orange',
+        ERROR: 'red',
+        PENDING: 'primary',
+      };
+    },
+    STATUS_LABELS() {
+      return {
+        COMPLETED: 'Completed',
+        COMPLETED_WITH_ERRORS: 'Completed With Errors',
+        ERROR: 'Error',
+        PENDING: 'Pending',
+      };
+    },
+  },
+
   methods: {
     getStatusColor(status) {
-      return STATUS_COLORS[status] || 'primary';
+      return this.STATUS_COLORS[status] || 'primary';
     },
     formatStatus(status) {
-      return STATUS_LABELS[status] || 'gray';
+      return this.STATUS_LABELS[status] || 'gray';
     },
   },
 
   async mounted() {
+    const authStore = useAuthStore();
     const task_id = "results";
 
     try {
@@ -78,27 +89,27 @@ export default {
       if (response.ok) {
         const data = await response.json();
         this.items = data;
+        this.isLoading = false;
       } else {
-        console.error("Erro ao buscar os dados:", response.statusText);
+        console.error("Error fetching data:", response.statusText);
       }
     } catch (error) {
-      console.error("Erro ao buscar os dados:", error);
+      console.error("Error fetching data:", error);
     }
   },
 };
 </script>
 
 <style scoped>
-.login-page {
+.loading-center {
   display: flex;
-  justify-content: center; /* Centralizar horizontalmente */
-  align-items: center; /* Centralizar verticalmente */
-  height: 100vh; /* Tornar a tela inteira visível */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-/* Conteúdo responsivo */
 .q-item-label {
-  max-width: 100%; /* Conteúdo se ajustará à largura máxima */
+  max-width: 100%;
 }
 
 h1 {

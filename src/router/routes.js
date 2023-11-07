@@ -21,10 +21,7 @@ const routes = [
       const userLoggedIn = ref(authStore.isAuthenticated);
       if (!userLoggedIn.value) {
         next("/login");
-        console.log("No Enter");
       } else {
-        console.log("Enter");
-
         next();
       }
     },

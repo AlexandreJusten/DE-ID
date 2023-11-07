@@ -13,7 +13,7 @@
 
         <q-toolbar-title>
           <q-avatar square>
-            <img src="../../public/icons/icon.png" />
+            <img src="/icons/icon.png" />
           </q-avatar>
         </q-toolbar-title>
 
@@ -35,7 +35,7 @@
       <q-list style="padding: 0%; margin-top: 0%">
         <div class="column">
           <div class="row justify-between">
-            <q-item-label header>De-ID v1.0 <q-badge rounded color="blue" label="alpha"/></q-item-label>
+            <q-item-label header>De-ID v1.0 <q-badge rounded color="red-4" label="demo"/></q-item-label>
             <q-btn flat rel="noopener" to="/login"><q-icon name="logout" /></q-btn>
           </div>
         </div>
@@ -95,16 +95,16 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "MainLayout",
 
-  components: {},
-
   setup() {
     const leftDrawerOpen = ref(false);
 
+    const toggleLeftDrawer = () => {
+      leftDrawerOpen.value = !leftDrawerOpen.value;
+    };
+
     return {
       leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+      toggleLeftDrawer,
     };
   },
 });

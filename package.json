@@ -2,7 +2,7 @@
   "name": "de-id",
   "version": "0.0.1",
   "description": "de-id-description",
-  "productName": "de-id-app",
+  "productName": "De-ID v1.0 (demo)",
   "author": "AlexandreJusten <58986915+AlexandreJusten@users.noreply.github.com>",
   "private": true,
   "scripts": {
