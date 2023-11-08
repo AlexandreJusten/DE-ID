@@ -47,11 +47,13 @@
 import { ref } from "vue";
 import { useQuasar } from 'quasar';
 import routers from "../../config/routers.json";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "stores/user";
 import Papa from "papaparse";
 export default {
   setup() {
     const $q = useQuasar()
+    const router = useRouter();
     const files = ref(null);
     const authStore = useAuthStore();
     const userLoggedIn = ref(authStore.isAuthenticated);

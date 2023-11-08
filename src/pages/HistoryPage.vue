@@ -3,7 +3,7 @@
     <div class="text-h6 q-pb-md q-pl-sm">History</div>
     <div v-if="!isLoading">
       <div class="q-pa-md" style="width: 100%;">
-        <q-list bordered separator style="min-width: 350px; width: 100%;">
+        <q-list bordered separator style="width: 100%;">
           <q-item
             v-for="item in items"
             :key="item.task_id"
